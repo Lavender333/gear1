@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
-import { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 
 export default function App() {
   const navRef = useRef<HTMLElement>(null);
@@ -38,10 +38,11 @@ export default function App() {
       observer.disconnect();
     };
   }, []);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const navLinks = [
     { name: 'MISSION', href: '#mission' },
     { name: 'VISION', href: '#vision' },
-
     { name: 'MARKET', href: '#market' },
     { name: 'MODEL', href: '#model' },
     { name: 'INVEST', href: '#invest' },
@@ -118,7 +119,7 @@ export default function App() {
       className="min-h-screen"
     >
       {/* Navigation */}
-      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-[900] h-[72px] flex items-center justify-between px-[60px] bg-gradient-to-b from-[var(--black)]/[0.95] to-[var(--black)]/[0] backdrop-blur-md border-b border-[var(--gold)]/[0.08] transition-colors">
+      <nav ref={navRef} className="fixed top-0 left-0 right-0 z-[900] h-[72px] flex items-center justify-between px-4 sm:px-6 md:px-[60px] bg-gradient-to-b from-[var(--black)]/[0.95] to-[var(--black)]/[0] backdrop-blur-md border-b border-[var(--gold)]/[0.08] transition-colors">
         <a href="#" className="flex items-center gap-[12px] no-underline touch-feedback">
           <svg width="38" height="38" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
@@ -138,26 +139,62 @@ export default function App() {
           </svg>
           <span className="nav-wordmark font-display text-[22px] font-bold text-[var(--white)] tracking-[0.12em]"><span className="text-[var(--gold)]">G</span>EAR</span>
         </a>
-        <ul className="flex gap-[36px] items-center list-none">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
-                {link.name}
-                <span className="absolute bottom-[-4px] left-0 right-0 h-[1px] bg-[var(--gold)] scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+        <div className="flex items-center">
+          {/* desktop links */}
+          <ul className="hidden md:flex gap-[36px] items-center list-none">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
+                  {link.name}
+                  <span className="absolute bottom-[-4px] left-0 right-0 h-[1px] bg-[var(--gold)] scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href="#invest" className="bg-[var(--crimson)] text-[var(--white)] px-[22px] py-[9px] rounded-[4px] font-bold text-[12px] tracking-[0.16em] uppercase transition-colors hover:bg-[var(--crim3)] border border-[var(--white)]/[0.1] no-underline touch-feedback">
+                INVEST
               </a>
             </li>
-          ))}
-          <li>
-            <a href="#invest" className="bg-[var(--crimson)] text-[var(--white)] px-[22px] py-[9px] rounded-[4px] font-bold text-[12px] tracking-[0.16em] uppercase transition-colors hover:bg-[var(--crim3)] border border-[var(--white)]/[0.1] no-underline touch-feedback">
-              INVEST
-            </a>
-          </li>
-        </ul>
+          </ul>
+          {/* mobile menu button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 text-[var(--gold)] focus:outline-none"
+            aria-label="Menu"
+          >
+            {menuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
+        </div>
+        {/* mobile dropdown */}
+        {menuOpen && (
+          <ul className="absolute top-[72px] left-0 right-0 bg-[var(--black)]/95 backdrop-blur-md flex flex-col items-center gap-6 py-6 md:hidden">
+            {navLinks.map((link) => (
+              <li key={link.name}>
+                <a
+                  href={link.href}
+                  className="text-[14px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline touch-feedback"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="#invest"
+                className="bg-[var(--crimson)] text-[var(--white)] px-[22px] py-[9px] rounded-[4px] font-bold text-[14px] tracking-[0.16em] uppercase transition-colors hover:bg-[var(--crim3)] border border-[var(--white)]/[0.1] no-underline touch-feedback"
+                onClick={() => setMenuOpen(false)}
+              >
+                INVEST
+              </a>
+            </li>
+          </ul>
+        )}
       </nav>
 
       <main>
         {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-[60px] py-[120px]">
+        <section className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 sm:px-6 md:px-[60px] py-[120px]">
           <div className="hero-bg" aria-hidden="true"></div>
           <div className="absolute inset-0 bg-grid-pattern mask-radial-gradient-hero-grid"></div>
 
@@ -270,7 +307,7 @@ export default function App() {
         </section>
 
         {/* Stats Strip */}
-        <section className="bg-[var(--dark2)] border-y border-[var(--gold)]/[0.08] py-[40px] px-[60px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        <section className="bg-[var(--dark2)] border-y border-[var(--gold)]/[0.08] py-[40px] px-4 sm:px-6 md:px-[60px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           {stats.map((stat, index) => (
             <div key={index} className={`text-center px-[24px] ${index < stats.length - 1 ? 'border-r border-[var(--gold)]/[0.06]' : ''}`}>
               <span className="font-display text-[44px] font-bold text-[var(--gold)] leading-none block drop-shadow-gold-md">{stat.value}</span>
@@ -280,7 +317,7 @@ export default function App() {
         </section>
 
         {/* Mission Section */}
-        <section id="mission" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="mission" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[80px] items-center">
             <div className="mission-left">
               <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
@@ -311,7 +348,7 @@ export default function App() {
         </section>
 
         {/* Platform Section */}
-        <section id="vision" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="vision" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               OUR VISION
@@ -339,7 +376,7 @@ export default function App() {
 
 
         {/* Market Section */}
-        <section id="market" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="market" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               MARKET OPPORTUNITY
@@ -372,7 +409,7 @@ export default function App() {
         </section>
 
         {/* Business Model Section */}
-        <section id="model" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="model" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               BUSINESS MODEL
