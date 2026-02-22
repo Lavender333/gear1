@@ -18,3 +18,11 @@ View your app in AI Studio: https://ai.studio/apps/e2d4bc21-c81f-48d0-930e-85ad0
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Publish to GitHub Pages
+
+1. Push your latest changes to `main`
+2. Publish:
+   `npm run deploy`
+3. Open:
+   `https://<github-username>.github.io/gear1/`
