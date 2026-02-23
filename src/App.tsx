@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 
@@ -22,11 +22,11 @@ export default function App() {
     const handleScroll = () => {
       if (navRef.current) {
         if (window.scrollY > 60) {
-          navRef.current.style.background = 'var(--black)';
-          navRef.current.style.borderBottomColor = 'var(--gold)/[0.10]';
+          navRef.current.style.background = '#1A1A1A';
+          navRef.current.style.borderBottomColor = 'rgba(212,175,55,0.10)';
         } else {
-          navRef.current.style.background = 'linear-gradient(180deg,var(--black)/[0.95] 0%,var(--black)/[0] 100%)';
-          navRef.current.style.borderBottomColor = 'var(--gold)/[0.06]';
+          navRef.current.style.background = 'linear-gradient(180deg,rgba(26,26,26,0.95) 0%,rgba(26,26,26,0) 100%)';
+          navRef.current.style.borderBottomColor = 'rgba(212,175,55,0.06)';
         }
       }
     };
@@ -39,6 +39,8 @@ export default function App() {
     };
   }, []);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollY } = useScroll();
+  const parallaxY = useTransform(scrollY, [0, 600], [0, -90]);
 
   const navLinks = [
     { name: 'MISSION', href: '#mission' },
@@ -144,7 +146,7 @@ export default function App() {
           <ul className="hidden md:flex gap-[36px] items-center list-none">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
+                <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[#BEBEBE] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
                   {link.name}
                   <span className="absolute bottom-[-4px] left-0 right-0 h-[1px] bg-[var(--gold)] scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                 </a>
@@ -172,7 +174,7 @@ export default function App() {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="text-[14px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline touch-feedback"
+                  className="text-[14px] font-semibold tracking-[0.16em] uppercase text-[#BEBEBE] no-underline touch-feedback"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.name}
@@ -219,11 +221,11 @@ export default function App() {
                 management technology.
               </p>
               <div className="flex gap-[16px] flex-wrap">
-                <a href="#vision" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.08] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-                  EXPLORE OUR VISION
+                <a href="#vision" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.08] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+                  DISCOVER OUR VISION
                 </a>
-                <a href="#invest" className="bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
-                  INVESTMENT OVERVIEW
+                <a href="#invest" className="bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all duration-[600ms] hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
+                  INQUIRE — INVESTMENT
                 </a>
               </div>
             </div>
@@ -232,7 +234,7 @@ export default function App() {
                 <div className="absolute rounded-full border border-[var(--gold)]/[0.12] w-[320px] h-[320px] animate-ringPulse-0"></div>
                 <div className="absolute rounded-full border border-[var(--crimson)]/[0.18] w-[240px] h-[240px] animate-ringPulse-1"></div>
                 <div className="absolute rounded-full border border-[var(--gold)]/[0.12] w-[160px] h-[160px] animate-ringPulse-2"></div>
-                <svg className="hero-emblem w-[180px] h-[180px] relative z-10 drop-shadow-gold-lg drop-shadow-crimson-xl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GEAR shield emblem">
+                <motion.svg style={{ y: parallaxY }} className="hero-emblem w-[180px] h-[180px] relative z-10 drop-shadow-gold-lg drop-shadow-crimson-xl" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GEAR shield emblem">
                   <defs>
                     <linearGradient id="heroGold" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" style={{stopColor:'var(--gold)'}}/>
@@ -300,7 +302,7 @@ export default function App() {
                   {/* Cross highlight */}
                   <rect x="88" y="68" width="10" height="72" rx="5" fill="rgba(255,255,255,0.18)"/>
                   <rect x="60" y="96" width="80" height="10" rx="5" fill="rgba(255,255,255,0.18)"/>
-                </svg>
+                </motion.svg>
               </div>
             </div>
           </div>
@@ -348,7 +350,7 @@ export default function App() {
         </section>
 
         {/* Platform Section */}
-        <section id="vision" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
+        <section id="vision" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               OUR VISION
@@ -409,7 +411,7 @@ export default function App() {
         </section>
 
         {/* Business Model Section */}
-        <section id="model" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
+        <section id="model" className="bg-[var(--dark2)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               BUSINESS MODEL
@@ -487,7 +489,7 @@ export default function App() {
               <img
                 src="https://picsum.photos/seed/gear-invest-2/600/400"
                 alt="Investment Opportunity"
-                className="w-full h-auto rounded-[4px] mb-[32px] border border-[var(--gold)]/[0.06] relative z-10"
+                className="product-image w-full h-auto rounded-[4px] mb-[32px] border border-[var(--gold)]/[0.06] relative z-10"
                 referrerPolicy="no-referrer"
               />
               <h3 className="font-display text-[28px] font-bold text-[var(--ash)] tracking-[0.02em] mb-[16px] relative z-10">
@@ -497,8 +499,8 @@ export default function App() {
                 Whether you're a community leader, institutional partner, or qualified investor — GEAR has a role for you in the future of emergency response.
               </p>
               <div className="flex flex-col gap-[16px] relative z-10">
-                <a href="#contact" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-                  CONTACT GEAR
+                <a href="#contact" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+                  Inquire
                 </a>
 
               </div>
@@ -507,7 +509,7 @@ export default function App() {
         </section>
 
         {/* Future Products Section */}
-        <section id="products" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="products" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               FUTURE PRODUCTS
@@ -544,7 +546,7 @@ export default function App() {
         </section>
 
         {/* QUOTE / MISSION */}
-        <section className="relative overflow-hidden bg-[var(--black)] py-[100px] text-center border-y border-[var(--gold)]/[0.06]">
+        <section className="relative overflow-hidden bg-[var(--dark2)] py-[100px] text-center border-y border-[var(--gold)]/[0.06]">
           <div className="quote-bg absolute inset-0 bg-radial-gradient-quote pointer-events-none"></div>
           <blockquote className="relative z-10 mx-auto mb-[24px] max-w-[800px] font-display text-[36px] font-bold leading-[1.4] text-[var(--ash)] tracking-[0.02em]">
             "We are not improving existing systems.<br />We are replacing <em className="text-[var(--gold)]">fragmentation</em> with structure."
@@ -565,11 +567,11 @@ export default function App() {
             GEAR has a role for you in the future of emergency response.
           </p>
           <div className="cta-btns relative z-10 flex justify-center gap-[16px]">
-            <a href="mailto:info@gear-aera.com" className="btn-primary bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-              Contact GEAR
+            <a href="mailto:info@gear-aera.com" className="btn-primary bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+              Inquire
             </a>
-            <a href="#vision" className="btn-secondary bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
-              Explore Our Vision
+            <a href="#vision" className="btn-secondary bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all duration-[600ms] hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
+              Discover Our Vision
             </a>
           </div>
           <span className="cta-url relative z-10 mt-[28px] block font-display text-[14px] font-semibold uppercase tracking-[0.18em] text-[var(--smoke)]">
