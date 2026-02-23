@@ -1,53 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
 @import "tailwindcss";
 
 :root{
-  --black:  #121213;
-  --dark:   #121213;
-  --dark2:  #121213;
-  --dark3:  #121213;
+  /* Navigation / footer (stays dark for contrast anchoring) */
+  --black:  #1A1A1A;
+  /* Primary content backgrounds – "Ghost" palette */
+  --dark:   #F9F9F8;   /* Bone / Alabaster */
+  --dark2:  #FFFFFF;   /* Pure White */
+  --dark3:  #F4F4F2;   /* Bone variant */
+  /* Brand accents */
   --crimson:#991E1E;
-  --crim2:  #991E1E;
-  --crim3:  #991E1E;
-  --gold:   #F3C66E;
-  --gold2:  #F3C66E;
-  --gold3:  #F3C66E;
+  --crim2:  #B02222;
+  --crim3:  #7A1919;
+  /* Champagne gold – 1 % accent */
+  --gold:   #D4AF37;
+  --gold2:  #D4AF37;
+  --gold3:  #D4AF37;
   --gold-dk:#b8922a;
-  --ash:    #EAECEC;
-  --mist:   #EAECEC;
-  --smoke:  #EAECEC;
-  --white:  #EAECEC;
+  /* Brushed silver */
+  --silver: #E2E2E2;
+  /* Text – Obsidian family */
+  --ash:    #1A1A1A;   /* Primary text */
+  --mist:   #2C2C2C;   /* Secondary text */
+  --smoke:  #666666;   /* Tertiary / captions */
+  /* White – kept for text on crimson/dark surfaces */
+  --white:  #FFFFFF;
   --crimson-rgb: 153, 30, 30;
-  --gold-rgb: 243, 198, 110;
+  --gold-rgb: 212, 175, 55;   /* Updated for champagne */
 }
 
 html{scroll-behavior:smooth}
 body{
-  background:var(--dark);
-  color:var(--ash);
+  background-color:#f9f9f8;
+  color:#1a1a1a;
   font-family:'Inter',sans-serif;
   overflow-x:hidden;
   cursor:default;
+  letter-spacing:-0.02em; /* premium tighter body spacing */
+}
+
+/* ── EDITORIAL HEADINGS ── */
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── PRODUCT / HERO IMAGES ── */
+.product-image {
+  filter: saturate(0.9);
+  transition: filter 0.8s ease;
+}
+.product-image:hover {
+  filter: saturate(1.1); /* color "blooms" only when touched */
 }
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-track{background:var(--dark3)}
 ::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
-/* ── GRAIN OVERLAY ── */
+/* ── GRAIN OVERLAY (reduced for light theme) ── */
 body::before{
   content:'';
   position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:1000;opacity:0.35;
+  pointer-events:none;z-index:1000;opacity:0.10;
 }
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Playfair Display", serif;
 
-  --bg-radial-gradient-quote: radial-gradient(ellipse 80% 60% at 50% 50%, var(--crimson)/[0.18] 0%, transparent 70%);
-  --bg-radial-gradient-cta: radial-gradient(ellipse 60% 80% at 50% 50%, var(--crimson)/[0.20] 0%, transparent 65%);
+  --bg-radial-gradient-quote: radial-gradient(ellipse 80% 60% at 50% 50%, var(--crimson)/[0.10] 0%, transparent 70%);
+  --bg-radial-gradient-cta: radial-gradient(ellipse 60% 80% at 50% 50%, var(--crimson)/[0.08] 0%, transparent 65%);
 }
 
 .fade-up {
@@ -94,9 +120,9 @@ button:focus-visible {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 40%, var(--crimson)/[0.15] 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, var(--gold)/[0.05] 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 80% 20%, var(--crimson)/[0.07] 0%, transparent 60%);
+    radial-gradient(ellipse 80% 60% at 50% 40%, var(--crimson)/[0.07] 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, var(--gold)/[0.04] 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 20%, var(--crimson)/[0.04] 0%, transparent 60%);
   animation: heroPulse 8s ease-in-out infinite alternate;
 }
 

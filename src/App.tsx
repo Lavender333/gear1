@@ -1,9 +1,13 @@
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight, Menu as MenuIcon, X as CloseIcon } from 'lucide-react';
 
 export default function App() {
   const navRef = useRef<HTMLElement>(null);
+
+  // Parallax – hero emblem drifts upward at a slower rate than the scroll
+  const { scrollY } = useScroll();
+  const heroParallaxY = useTransform(scrollY, [0, 600], [0, -90]);
 
   useEffect(() => {
     // Scroll-triggered fade-in
@@ -22,11 +26,11 @@ export default function App() {
     const handleScroll = () => {
       if (navRef.current) {
         if (window.scrollY > 60) {
-          navRef.current.style.background = 'var(--black)';
-          navRef.current.style.borderBottomColor = 'var(--gold)/[0.10]';
+          navRef.current.style.background = '#1A1A1A';
+          navRef.current.style.borderBottomColor = 'rgba(212,175,55,0.12)';
         } else {
-          navRef.current.style.background = 'linear-gradient(180deg,var(--black)/[0.95] 0%,var(--black)/[0] 100%)';
-          navRef.current.style.borderBottomColor = 'var(--gold)/[0.06]';
+          navRef.current.style.background = 'linear-gradient(180deg, rgba(26,26,26,0.95) 0%, rgba(26,26,26,0) 100%)';
+          navRef.current.style.borderBottomColor = 'rgba(212,175,55,0.08)';
         }
       }
     };
@@ -146,7 +150,7 @@ export default function App() {
           <ul className="hidden md:flex gap-[36px] items-center list-none">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
+                <a href={link.href} className="text-[12px] font-semibold tracking-[0.16em] uppercase text-[#BEBEBE] no-underline relative transition-colors hover:text-[var(--gold)] group touch-feedback">
                   {link.name}
                   <span className="absolute bottom-[-4px] left-0 right-0 h-[1px] bg-[var(--gold)] scale-x-0 origin-left transition-transform group-hover:scale-x-100"></span>
                 </a>
@@ -174,7 +178,7 @@ export default function App() {
               <li key={link.name}>
                 <a
                   href={link.href}
-                  className="text-[14px] font-semibold tracking-[0.16em] uppercase text-[var(--mist)] no-underline touch-feedback"
+                  className="text-[14px] font-semibold tracking-[0.16em] uppercase text-[#BEBEBE] no-underline touch-feedback"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.name}
@@ -206,9 +210,8 @@ export default function App() {
                 <span className="w-[6px] h-[6px] bg-[var(--crim3)] rounded-full animate-blink"></span>
                 NOW SEEKING STRATEGIC PARTNERS
               </div>
-              <h1 className="font-display text-[72px] leading-[0.95] font-bold text-[var(--white)] tracking-[0.02em] mb-[10px]">
-                GLOBAL EMERGENCY AID <span className="text-[var(--gold)] drop-shadow-gold-lg">RESPONSE</span>.
-              </h1>
+              <h1 className="font-display text-[72px] leading-[0.95] font-bold text-[var(--ash)] tracking-[0.02em] mb-[10px]">
+                GLOBAL EMERGENCY AID <span className="text-[var(--gold)] drop-shadow-gold-lg">RESPONSE</span>.</h1>
               <p className="font-display text-[13px] font-semibold tracking-[0.28em] uppercase text-[var(--crimson)] mb-[32px]">
                 RESPONSE. RELIEF. RESCUE.
               </p>
@@ -221,16 +224,16 @@ export default function App() {
                 management technology.
               </p>
               <div className="flex gap-[16px] flex-wrap">
-                <a href="#vision" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.08] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-                  EXPLORE OUR VISION
+                <a href="#vision" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.08] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+                  DISCOVER OUR VISION
                 </a>
-                <a href="#invest" className="bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
-                  INVESTMENT OVERVIEW
+                <a href="#invest" className="bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all duration-[600ms] hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
+                  INQUIRE — INVESTMENT
                 </a>
               </div>
             </div>
             <div className="hero-right flex items-center justify-center relative">
-              <div className="relative flex items-center justify-center">
+              <motion.div style={{ y: heroParallaxY }} className="relative flex items-center justify-center">
                 <div className="absolute rounded-full border border-[var(--gold)]/[0.12] w-[320px] h-[320px] animate-ringPulse-0"></div>
                 <div className="absolute rounded-full border border-[var(--crimson)]/[0.18] w-[240px] h-[240px] animate-ringPulse-1"></div>
                 <div className="absolute rounded-full border border-[var(--gold)]/[0.12] w-[160px] h-[160px] animate-ringPulse-2"></div>
@@ -303,7 +306,7 @@ export default function App() {
                   <rect x="88" y="68" width="10" height="72" rx="5" fill="rgba(255,255,255,0.18)"/>
                   <rect x="60" y="96" width="80" height="10" rx="5" fill="rgba(255,255,255,0.18)"/>
                 </svg>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -350,7 +353,7 @@ export default function App() {
         </section>
 
         {/* Platform Section */}
-        <section id="vision" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
+        <section id="vision" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               OUR VISION
@@ -411,7 +414,7 @@ export default function App() {
         </section>
 
         {/* Business Model Section */}
-        <section id="model" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
+        <section id="model" className="bg-[var(--dark2)] border-t border-[var(--gold)]/[0.08] py-[120px] px-4 sm:px-6 md:px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               BUSINESS MODEL
@@ -425,7 +428,7 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-[40px]">
               {businessModelPhases.map((phase, index) => (
-                <div key={index} className="model-card p-[32px] bg-[var(--dark2)] rounded-[8px] border border-[var(--gold)]/[0.06] relative overflow-hidden group">
+                <div key={index} className="model-card p-[32px] bg-[var(--dark)] rounded-[8px] border border-[var(--silver)] relative overflow-hidden group">
                   <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] group-hover:opacity-[0.1] transition-opacity"></div>
                   <span className="font-display text-[44px] font-bold text-[var(--gold)] leading-none block drop-shadow-gold-md mb-[10px] relative z-10">{phase.phase}</span>
                   <h3 className="font-display text-[20px] font-bold text-[var(--ash)] tracking-[0.02em] mb-[8px] relative z-10">{phase.title}</h3>
@@ -489,7 +492,7 @@ export default function App() {
               <img
                 src="https://picsum.photos/seed/gear-invest-2/600/400"
                 alt="Investment Opportunity"
-                className="w-full h-auto rounded-[4px] mb-[32px] border border-[var(--gold)]/[0.06] relative z-10"
+                className="product-image w-full h-auto rounded-[4px] mb-[32px] border border-[var(--silver)] relative z-10"
                 referrerPolicy="no-referrer"
               />
               <h3 className="font-display text-[28px] font-bold text-[var(--ash)] tracking-[0.02em] mb-[16px] relative z-10">
@@ -499,8 +502,8 @@ export default function App() {
                 Whether you're a community leader, institutional partner, or qualified investor — GEAR has a role for you in the future of emergency response.
               </p>
               <div className="flex flex-col gap-[16px] relative z-10">
-                <a href="#contact" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-                  CONTACT GEAR
+                <a href="#contact" className="bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+                  INQUIRE
                 </a>
 
               </div>
@@ -509,7 +512,7 @@ export default function App() {
         </section>
 
         {/* Future Products Section */}
-        <section id="products" className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
+        <section id="products" className="bg-[var(--dark)] border-t border-[var(--gold)]/[0.08] py-[120px] px-[60px]">
           <div className="max-w-[1100px] mx-auto">
             <span className="text-[11px] font-bold tracking-[0.20em] uppercase text-[var(--gold)] mb-[18px] block">
               FUTURE PRODUCTS
@@ -546,7 +549,7 @@ export default function App() {
         </section>
 
         {/* QUOTE / MISSION */}
-        <section className="relative overflow-hidden bg-[var(--black)] py-[100px] text-center border-y border-[var(--gold)]/[0.06]">
+        <section className="relative overflow-hidden bg-[var(--dark2)] py-[100px] text-center border-y border-[var(--silver)]">
           <div className="quote-bg absolute inset-0 bg-radial-gradient-quote pointer-events-none"></div>
           <blockquote className="relative z-10 mx-auto mb-[24px] max-w-[800px] font-display text-[36px] font-bold leading-[1.4] text-[var(--ash)] tracking-[0.02em]">
             "We are not improving existing systems.<br />We are replacing <em className="text-[var(--gold)]">fragmentation</em> with structure."
@@ -567,11 +570,11 @@ export default function App() {
             GEAR has a role for you in the future of emergency response.
           </p>
           <div className="cta-btns relative z-10 flex justify-center gap-[16px]">
-            <a href="mailto:info@gear-aera.com" className="btn-primary bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
-              Contact GEAR
+            <a href="mailto:info@gear-aera.com" className="btn-primary bg-[var(--crimson)] text-[var(--white)] text-[12px] font-bold tracking-[0.16em] uppercase px-[36px] py-[16px] rounded-[4px] border border-[var(--white)]/[0.1] transition-all duration-[600ms] shadow-crimson-xl hover:bg-[var(--crim3)] hover:shadow-crimson-2xl hover:-translate-y-[1px] no-underline touch-feedback">
+              Inquire
             </a>
-            <a href="#vision" className="btn-secondary bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
-              Explore Our Vision
+            <a href="#vision" className="btn-secondary bg-transparent text-[var(--gold)] text-[12px] font-bold tracking-[0.16em] uppercase px-[32px] py-[15px] rounded-[4px] border border-[var(--gold)]/[0.4] transition-all duration-[600ms] hover:bg-[var(--gold)]/[0.08] hover:border-[var(--gold)] no-underline touch-feedback">
+              Discover Our Vision
             </a>
           </div>
           <span className="cta-url relative z-10 mt-[28px] block font-display text-[14px] font-semibold uppercase tracking-[0.18em] text-[var(--smoke)]">
@@ -581,17 +584,17 @@ export default function App() {
 
         {/* Footer */}
         <footer className="bg-[var(--black)] border-t border-[var(--gold)]/[0.08] py-[32px] px-[60px] flex items-center justify-between">
-          <a href="#" className="foot-logo font-display text-[20px] font-bold text-[var(--ash)] tracking-[0.12em] no-underline touch-feedback">
+          <a href="#" className="foot-logo font-display text-[20px] font-bold text-[var(--white)] tracking-[0.12em] no-underline touch-feedback">
             <span className="text-[var(--gold)]">G</span>EAR
           </a>
-          <span className="foot-copy text-[11px] font-medium tracking-[0.10em] text-[var(--smoke)]">
+          <span className="foot-copy text-[11px] font-medium tracking-[0.10em] text-[#BEBEBE]">
             © 2025 Global Emergency Accelerated Response LLC · All Rights Reserved
           </span>
           <ul className="foot-links flex list-none gap-[24px]">
-            <li><a href="#mission" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--smoke)] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Mission</a></li>
-            <li><a href="#vision" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--smoke)] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Vision</a></li>
-            <li><a href="#invest" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--smoke)] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Invest</a></li>
-            <li><a href="#contact" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--smoke)] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Contact</a></li>
+            <li><a href="#mission" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[#BEBEBE] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Mission</a></li>
+            <li><a href="#vision" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[#BEBEBE] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Vision</a></li>
+            <li><a href="#invest" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[#BEBEBE] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Invest</a></li>
+            <li><a href="#contact" className="text-[11px] font-semibold tracking-[0.12em] uppercase text-[#BEBEBE] no-underline transition-colors hover:text-[var(--gold)] touch-feedback">Contact</a></li>
           </ul>
         </footer>
       </main>
