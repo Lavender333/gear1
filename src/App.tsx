@@ -121,6 +121,8 @@ export default function App() {
       {/* Navigation */}
       <nav ref={navRef} className="fixed top-0 left-0 right-0 z-[900] h-[72px] flex items-center justify-between px-4 sm:px-6 md:px-[60px] bg-gradient-to-b from-[var(--black)]/[0.95] to-[var(--black)]/[0] backdrop-blur-md border-b border-[var(--gold)]/[0.08] transition-colors">
         <a href="#" className="flex items-center gap-[12px] no-underline touch-feedback">
+          {/* replace "/logo.png" with your elite logo file; ensure it's copied into public or the build output */}
+          <img src="/logo.png" alt="GEAR logo" className="h-8 w-auto object-contain" />
           <svg width="38" height="38" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <linearGradient id="nGrad" x1="0%" y1="0%" x2="100%" y2="100%">

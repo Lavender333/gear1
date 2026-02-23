@@ -19,6 +19,20 @@ View your app in AI Studio: https://ai.studio/apps/e2d4bc21-c81f-48d0-930e-85ad0
 3. Run the app:
    `npm run dev`
 
+
+### Branding & Colors
+
+- Place the GEAR logo file (PNG/SVG) in the `public/` folder (e.g. `public/logo.png`).
+- The CSS declares custom variables matching the official palette:
+  ```css
+  --black:  #121213;
+  --crimson:#991E1E;
+  --gold:   #F3C66E;
+  --ash:    #EAECEC;
+  ```
+  You can adjust these in `src/index.css` to refine the color scheme.
+- The header already renders `/logo.png` alongside the SVG mark; swap in your high‑resolution version to give the site an elite look.
+
 ## Publish to GitHub Pages
 
 1. Push your latest changes to `main`
