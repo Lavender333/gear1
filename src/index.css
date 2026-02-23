@@ -2,23 +2,24 @@
 @import "tailwindcss";
 
 :root{
-  --black:  #121213;
-  --dark:   #121213;
-  --dark2:  #121213;
-  --dark3:  #121213;
+  --black:  #1A1A1A;
+  --dark:   #F9F9F8;
+  --dark2:  #FFFFFF;
+  --dark3:  #F9F9F8;
   --crimson:#991E1E;
   --crim2:  #991E1E;
   --crim3:  #991E1E;
-  --gold:   #F3C66E;
-  --gold2:  #F3C66E;
-  --gold3:  #F3C66E;
+  --gold:   #D4AF37;
+  --gold2:  #D4AF37;
+  --gold3:  #D4AF37;
   --gold-dk:#b8922a;
-  --ash:    #EAECEC;
-  --mist:   #EAECEC;
-  --smoke:  #EAECEC;
+  --silver: #E2E2E2;
+  --ash:    #1A1A1A;
+  --mist:   #333333;
+  --smoke:  #666666;
   --white:  #EAECEC;
   --crimson-rgb: 153, 30, 30;
-  --gold-rgb: 243, 198, 110;
+  --gold-rgb: 212, 175, 55;
 }
 
 html{scroll-behavior:smooth}
@@ -28,11 +29,28 @@ body{
   font-family:'Inter',sans-serif;
   overflow-x:hidden;
   cursor:default;
+  letter-spacing:-0.02em;
+}
+
+h1, h2 {
+  font-family:'Playfair Display',serif;
+  font-weight:300;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+
+.product-image {
+  filter: saturate(0.9);
+  transition: filter 0.8s ease;
+}
+
+.product-image:hover {
+  filter: saturate(1.1);
 }
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-track{background:var(--silver)}
 ::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
 /* ── GRAIN OVERLAY ── */
 body::before{
